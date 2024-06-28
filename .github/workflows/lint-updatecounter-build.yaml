@@ -45,8 +45,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # - name: Checkout repository
+      #   uses: actions/checkout@v2
+
+      - name: Checkout repository using PAT
         uses: actions/checkout@v2
+        with:
+          repository: NubeEra-Temps/MLPipeline-Actions  # replace with the target repository
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v2
