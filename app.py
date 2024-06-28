@@ -10,8 +10,9 @@ from flask import Flask, request, render_template
 
 
 APP = Flask(__name__,template_folder='templates')
-MODEL = pickle.load(open('model.pkl', 'rb'))
-
+MODEL = ""
+with open('model.pkl', 'rb') as file:
+    MODEL = pickle.load(file)
 
 @APP.route('/')
 def home():
@@ -26,7 +27,8 @@ def predict():
     '''
     For rendering results on HTML GUI
     '''
-    features = [x for x in request.form.values()]
+    # features = [x for x in request.form.values()]
+    features = list(request.form.values())
     final_features = [np.array(features)]
     column_names = ['R&D Spend', 'Administration', 'Marketing Spend', 'State']
     final_features = pd.DataFrame(final_features,columns=column_names)
