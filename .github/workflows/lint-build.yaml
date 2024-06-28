@@ -41,7 +41,7 @@ jobs:
           python -m unittest --verbose --failfast      
 
   build_image:
-    needs: [lint]
+    needs: [update_counter]
     runs-on: ubuntu-latest
     steps:
     - name: Clone Repository
@@ -65,7 +65,7 @@ jobs:
         context: .
         file: docker/Dockerfile # Path to your Dockerfile
         push: true
-        tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model:v1
+        tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model:${{ steps.update_counter.outputs.counter }}
 
 
     # - uses: mr-smithers-excellent/docker-build-push@v6

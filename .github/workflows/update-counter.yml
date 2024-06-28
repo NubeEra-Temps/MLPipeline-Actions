@@ -1,0 +1,36 @@
+name: Update Counter
+on: [workflow_dispatch]
+  # push:
+  #   branches:
+  #     - main
+
+jobs:
+  update_counter:
+    needs: [lint]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Update counter
+        run: python ./Counters/update_counter.py
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add ./Counters/counter.txt
+          git commit -m 'Update counter'
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+      - name: Get counter value
+        id: get_counter
+        run: echo "Counter value is ${{ steps.update_counter.outputs.counter }}"
