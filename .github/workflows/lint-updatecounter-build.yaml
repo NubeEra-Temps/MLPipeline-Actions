@@ -79,7 +79,7 @@ jobs:
 
       - name: Get counter value
         id: get_counter
-        run: echo "Counter value is ${{ steps.Bupdate_counter.outputs.counter }}"
+        run: echo "Counter value is ${{ steps.update_counter.outputs.counter }}"
 
   Cbuild_image:
     needs: [Bupdate_counter]
@@ -106,7 +106,7 @@ jobs:
         context: .
         file: docker/Dockerfile # Path to your Dockerfile
         push: true
-        tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model:${{ steps.Bupdate_counter.outputs.counter }}
+        tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model:${{ steps.update_counter.outputs.counter }}
 
 
     # - uses: mr-smithers-excellent/docker-build-push@v6
