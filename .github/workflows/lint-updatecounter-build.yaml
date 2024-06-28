@@ -104,26 +104,29 @@ jobs:
     steps:
     - name: Clone Repository
       uses: actions/checkout@v4
-
+    
+    - name: Get counter value
+      run: echo "Counter value is ${{ env.counter }}"
+    ################### DISABLE SSH ##########################
     # - name: Setup tmate session
     #   uses: mxschmitt/action-tmate@v3
     
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+    # - name: Set up Docker Buildx
+    #   uses: docker/setup-buildx-action@v2
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+    # - name: Log in to Docker Hub
+    #   uses: docker/login-action@v2
+    #   with:
+    #     username: ${{ secrets.DOCKER_USERNAME }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        file: docker/Dockerfile # Path to your Dockerfile
-        push: true
-        tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model:${{ env.counter }}
+    # - name: Build and push Docker image
+    #   uses: docker/build-push-action@v4
+    #   with:
+    #     context: .
+    #     file: docker/Dockerfile # Path to your Dockerfile
+    #     push: true
+    #     tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model:${{ env.counter }}
 
 
     # - uses: mr-smithers-excellent/docker-build-push@v6
