@@ -7,7 +7,19 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      # - name: Clone Repo
+      #   uses: actions/checkout@v4
+      #     with:
+      #       repository: my-org/my-other-repo
+      #       token: ${{ secrets.PAT }} # `PAT` is a secret that contains the token
+
+      - name: Listing Files
+        run: |
+          pwd
+          ls          
 
       - name: Set up Python
         run: echo "pythonLocation=/opt/hostedtoolcache/Python/3.12.4/x64" >> $GITHUB_ENV
