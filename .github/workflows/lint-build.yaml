@@ -44,7 +44,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: List files for debugging
-      run: ls -R
+      run: |
+        ls -R
+        pwd
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+
     # - uses: mr-smithers-excellent/docker-build-push@v6
     #   name: Build & push Docker image
     #   with:
