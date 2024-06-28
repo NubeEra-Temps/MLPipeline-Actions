@@ -60,8 +60,25 @@ jobs:
           python-version: '3.x'
 
       - name: Update counter
-        run: python ./Counters/update_counter.py
+        run: |
+          python ./Counters/update_counter.py
+        shell: bash
+        continue-on-error: false
+        env:
+          GITHUB_OUTPUT: ${{ steps.update_counter.outputs.counter }}
 
+      - name: Determine counter value
+        id: determine_counter
+        run: |
+          if [ -z "${{ steps.update_counter.outputs.counter }}" ]; then
+            echo "counter=1" >> $GITHUB_ENV
+          else
+            echo "counter=${{ steps.update_counter.outputs.counter }}" >> $GITHUB_ENV
+          fi
+
+      - name: Get counter value
+        run: echo "Counter value is ${{ env.counter }}"
+      
       - name: listing
         run: |
           pwd
@@ -106,7 +123,7 @@ jobs:
         context: .
         file: docker/Dockerfile # Path to your Dockerfile
         push: true
-        tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model:${{ steps.update_counter.outputs.counter }}
+        tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model::${{ env.counter }}
 
 
     # - uses: mr-smithers-excellent/docker-build-push@v6
