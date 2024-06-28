@@ -14,6 +14,7 @@ MODEL = ""
 with open('model.pkl', 'rb') as file:
     MODEL = pickle.load(file)
 
+
 @APP.route('/')
 def home():
     '''
