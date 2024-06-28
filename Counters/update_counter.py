@@ -1,6 +1,6 @@
 import os
 
-counter_file = 'counter.txt'
+counter_file = './Counters/counter.txt'
 
 # Read the current counter value
 if os.path.exists(counter_file):
