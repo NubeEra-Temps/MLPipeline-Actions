@@ -7,7 +7,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Set up Python
         run: echo "pythonLocation=/opt/hostedtoolcache/Python/3.12.4/x64" >> $GITHUB_ENV
@@ -49,6 +49,24 @@ jobs:
         pwd
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: docker/Dockerfile # Path to your Dockerfile
+        push: true
+        tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model:latest
+
 
     # - uses: mr-smithers-excellent/docker-build-push@v6
     #   name: Build & push Docker image
