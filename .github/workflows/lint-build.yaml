@@ -33,8 +33,24 @@ jobs:
         run: |
           python -m unittest --verbose --failfast
 
-      - name: Find Value for secrets.ML_SERVICE_ACCT_KEY variable
-        run:  |
-          echo "________________________________________________"
-          echo "Value is    ${{ secrets.ML_SERVICE_ACCT_KEY }}"
-          echo "________________________________________________"
+      # - name: Find Value for secrets.ML_SERVICE_ACCT_KEY variable
+      #   run:  |
+      #     echo "________________________________________________"
+      #     echo "Value is    ${{ secrets.ML_SERVICE_ACCT_KEY }}"
+      #     echo "________________________________________________"
+
+  build_image:
+    needs: [lint]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: mr-smithers-excellent/docker-build-push@v6
+      name: Build & push Docker image
+      with:
+        image: mujahed/deploy-ml-model
+        tags: v1, latest
+        registry: docker.io
+        dockerfile: Dockerfile
+        # multiPlatform: true
+        # platform: linux/amd64,linux/arm64,linux/arm/v7
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
