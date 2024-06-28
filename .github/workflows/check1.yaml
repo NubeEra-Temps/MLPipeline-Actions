@@ -19,3 +19,8 @@ jobs:
       - name: Run unit tests
         run: |
           python -m unittest -- verbose -- failfast
+      - name: Find Value for secrets.ML_SERVICE_ACCT_KEY variable
+        run:  |
+          echo "________________________________________________"
+          echo "Value is    ${{ secrets.ML_SERVICE_ACCT_KEY }}"
+          echo "________________________________________________"
