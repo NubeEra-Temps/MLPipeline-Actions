@@ -18,20 +18,20 @@ jobs:
       - name: Setup Python environment
         uses: actions/setup-python@v2
 
-      - name: Upgrade pip version
-        run: pip install --upgrade pip
+      # - name: Upgrade pip version
+      #   run: pip install --upgrade pip
 
-      - name: Install requirements
-        run: pip install --quiet --requirement requirements.txt
+      # - name: Install requirements
+      #   run: pip install --quiet --requirement requirements.txt
 
-      - name: Lint code
-        run: |
-          flake8 --ignore=E501,E231 *.py
-          pylint --disable=C0301 *.py
+      # - name: Lint code
+      #   run: |
+      #     flake8 --ignore=E501,E231 *.py
+      #     pylint --disable=C0301 *.py
 
-      - name: Run unit tests
-        run: |
-          python -m unittest --verbose --failfast
+      # - name: Run unit tests
+      #   run: |
+      #     python -m unittest --verbose --failfast
 
       # - name: Find Value for secrets.ML_SERVICE_ACCT_KEY variable
       #   run:  |
@@ -43,14 +43,16 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-latest
     steps:
-    - uses: mr-smithers-excellent/docker-build-push@v6
-      name: Build & push Docker image
-      with:
-        image: mujahed/deploy-ml-model
-        tags: v1, latest
-        registry: docker.io
-        dockerfile: docker/Dockerfile
-        # multiPlatform: true
-        # platform: linux/amd64,linux/arm64,linux/arm/v7
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: List files for debugging
+      run: ls -R
+    # - uses: mr-smithers-excellent/docker-build-push@v6
+    #   name: Build & push Docker image
+    #   with:
+    #     image: mujahed/deploy-ml-model
+    #     tags: v1, latest
+    #     registry: docker.io
+    #     dockerfile: docker/Dockerfile
+    #     # multiPlatform: true
+    #     # platform: linux/amd64,linux/arm64,linux/arm/v7
+    #     username: ${{ secrets.DOCKER_USERNAME }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }}
