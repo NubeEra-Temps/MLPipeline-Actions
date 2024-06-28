@@ -1,4 +1,4 @@
-name: checking ML functionalities
+name: Machine Learning Pipeline execution
 
 on: [workflow_dispatch]
 env:
@@ -49,7 +49,7 @@ jobs:
         image: mujahed/deploy-ml-model
         tags: v1, latest
         registry: docker.io
-        dockerfile: Dockerfile
+        dockerfile: docker/Dockerfile
         # multiPlatform: true
         # platform: linux/amd64,linux/arm64,linux/arm/v7
         username: ${{ secrets.DOCKER_USERNAME }}
