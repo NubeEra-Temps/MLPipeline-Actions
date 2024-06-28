@@ -123,7 +123,7 @@ jobs:
         context: .
         file: docker/Dockerfile # Path to your Dockerfile
         push: true
-        tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model::${{ env.counter }}
+        tags: docker.io/${{ secrets.DOCKER_USERNAME }}/deploy-ml-model:${{ env.counter }}
 
 
     # - uses: mr-smithers-excellent/docker-build-push@v6
