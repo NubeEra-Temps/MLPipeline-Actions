@@ -38,7 +38,8 @@ def predict():
     for i in prediction:
         for j in i:
             temp = j
-    return render_template('index.html', prediction_text='${}'.format(temp))
+    # return render_template('index.html', prediction_text='${}'.format(temp))
+    return render_template('index.html', prediction_text='{temp}')
 
 
 if __name__ == '__main__':
