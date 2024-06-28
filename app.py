@@ -39,7 +39,7 @@ def predict():
         for j in i:
             temp = j
     # return render_template('index.html', prediction_text='${}'.format(temp))
-    return render_template('index.html', prediction_text='{temp}')
+    return render_template('index.html', prediction_text=f'${temp:.2f}')
 
 
 if __name__ == '__main__':
