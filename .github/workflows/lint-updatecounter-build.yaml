@@ -10,26 +10,18 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v4
 
-      # - name: Clone Repo
-      #   uses: actions/checkout@v4
-      #     with:
-      #       repository: my-org/my-other-repo
-      #       token: ${{ secrets.ML_SERVICE_ACCT_KEY }} # `PAT` is a secret that contains the token
-
-      - name: Set up Python
-        run: echo "pythonLocation=/opt/hostedtoolcache/Python/3.12.4/x64" >> $GITHUB_ENV
-
-      - name: Use Python Location
-        run: echo "Python is located at $pythonLocation"
+      - name: Set up Python & Python Location
+        run: |
+          echo "pythonLocation=/opt/hostedtoolcache/Python/3.12.4/x64" >> $GITHUB_ENV
+          echo "Python is located at $pythonLocation"
 
       - name: Setup Python environment
         uses: actions/setup-python@v2
 
-      - name: Upgrade pip version
-        run: pip install --upgrade pip
-
-      - name: Install requirements
-        run: pip install --quiet --requirement requirements.txt
+      - name: Upgrade PIP and Install requirements
+        run: |
+          pip install --upgrade pip
+          pip install --quiet --requirement requirements.txt
 
       - name: Lint code
         run: |
@@ -43,15 +35,11 @@ jobs:
   Bupdate_counter:
     needs: [Alint]
     runs-on: ubuntu-latest
-
     steps:
-      # - name: Checkout repository
-      #   uses: actions/checkout@v2
-
       - name: Checkout repository using PAT
         uses: actions/checkout@v2
         with:
-          repository: NubeEra-Temps/MLPipeline-Actions  # replace with the target repository
+          repository: NubeEra-Temps/MLPipeline-Actions
           token: ${{ secrets.PAT_TOKEN }}
 
       - name: Set up Python
@@ -80,12 +68,7 @@ jobs:
         run: |
           echo $GITHUB_ENV
           echo "Counter value is ${{ env.counter }}"          
-      
-      - name: listing
-        run: |
-          pwd
-          ls
-
+    
       - name: Commit changes
         run: |
           git config --global user.name "${{ github.actor }}"
